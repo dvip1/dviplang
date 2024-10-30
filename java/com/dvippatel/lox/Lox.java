@@ -1,3 +1,12 @@
+// █████                           
+//░░███                            
+// ░███         ██████  █████ █████
+// ░███        ███░░███░░███ ░░███ 
+// ░███       ░███ ░███ ░░░█████░  
+// ░███      █░███ ░███  ███░░░███ 
+// ███████████░░██████  █████ █████
+//░░░░░░░░░░░  ░░░░░░  ░░░░░ ░░░░░ 
+//                           
 package com.dvippatel.lox;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +18,9 @@ import java.util.List;
 
 public class Lox {
  static boolean hadError = false;
-  public static void main(String[] args) throws IOException {
+ private static boolean isMultiLine = false;
+
+ public static void main(String[] args) throws IOException {
     if (args.length > 1) {
       System.out.println("Usage: jlox [script]");
       System.exit(64); 
@@ -26,11 +37,14 @@ public class Lox {
    private static void runPrompt() throws IOException {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
-
+//    StringBuilder currentInput = new StringBuilder();
+  
     for (;;) { 
-      System.out.print("> ");
+ //     System.out.print(currentInput.length() == 0 ? "> " : "... ");
+      System.out.print(">> ");
       String line = reader.readLine();
       if (line == null) break;
+     // currentInput.append(line).append("\n"); 
       run(line);
     }
   }

@@ -21,6 +21,7 @@ class Scanner {
   private int start = 0;
   private int current = 0;
   private int line = 1;
+  private boolean isIncomplete = false;
 
   private static final Map<String, TokenType> keywords;
 
@@ -112,7 +113,9 @@ class Scanner {
         if (match('/')) {
           while (peek() != '\n' && !isAtEnd())
             advance();
-        } else {
+        } else if(match('*')){
+            handleMutlipleLineComment();  
+        }else {
           addToken(SLASH);
         }
         break;
@@ -238,5 +241,20 @@ class Scanner {
   private boolean isAlphaNumeric(char c) {
     return isAlpha(c) || isDigit(c);
   }
-
+  private void handleMutlipleLineComment(){
+    while(!isAtEnd()){
+        char current = peek();
+        if(current == '*' && peekNext() =='/'){
+            advance();
+            advance();
+            return;
+        }
+        if(current == '\n'){
+            line ++;
+        }
+        advance();
+        
+    }
+    Lox.error(line, "Unterminated Multi-line comment");
+  }
 }
